@@ -1,0 +1,55 @@
+create your projectFile
+   /myProject directory
+
+Open a console located at the directory (CMD console)
+
+
+#CMD py -3 -m venv venv
+#CMD venv\Scripts\activate
+
+#CMD  pip install Flask torchvision
+
+
+#Note above are 2 seperate things
+Flask   - what we are using to host of data
+torchvision 
+
+========================================================
+
+"""Following is a simple webserver, taken from Flask's documentaion
+"""
+
+from flask import Flask
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return 'Hello World!'
+
+"""Save the above snippet in a file called ``app.py`` and you can now run a
+Flask development server by typing:
+
+#CMD   FLASK_ENV=development FLASK_APP=app.py flask run   //!!!!you dont need to worry about this...
+
+=========================================================
+
+Local:
+#CMD set FLASK_APP=hello    <-- if you are using a .py file you dont need this          //!!!!you dont need to worry about this...
+#CMD set FLASK_APP=         <--- if you need to empty it                                //!!!!you dont need to worry about this...
+
+//start local hosting
+#CMD  flask run
+
+should result in terminal where it is locally   
+    * Running on http://127.0.0.1:5000/
+
+
+=======================================================
+
+// install CORS 
+// Cross Origin Resource Sharing (CORS)
+// https://flask-cors.readthedocs.io/en/latest/
+
+#CMD  pip install -U flask-cors
+===========================================================
