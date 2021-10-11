@@ -66,6 +66,8 @@ app = Flask(__name__)
 def hello():
     return 'Hello World!'
 
+
+
 """Save the above snippet in a file called ``app.py`` and you can now run a
 Flask development server by typing:
 
