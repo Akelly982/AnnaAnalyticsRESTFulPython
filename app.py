@@ -1,8 +1,5 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-
-
-
 
 
 app = Flask(__name__)
@@ -11,10 +8,15 @@ CORS(app)
 
 
 
-@app.route('/')
-def hello():    # def function this can be called anything
-    return 'Hello World! I am currently running'
+# Home page
 
+@app.route('/')
+def hello(name='Anna Analytics'):    # def function this can be called anything
+    return render_template('hello.html', siteName=name)
+
+@app.route('/test')
+def testing():
+    return  render_template('input1A.html')
 
 
 #-------Navigation ---------------------------
@@ -47,7 +49,7 @@ def navFunc():
 #------- Input -------------------------------
 #---------------------------------------------
 
-
+# check to see if the data is implemented
 def getInputData(childId):
     switcher = {
         '1A' : input1A
@@ -57,42 +59,35 @@ def getInputData(childId):
 
 
 def input1A():
-    return jsonify({
-        'isSuccessfull' : True,
-        'whoAmI' : 'Input1A',
-        'errorMsg' : 'none',
-        'dataArr' : [{'inputId' : 'labelNumeric' , 'inputItemData': [{'labelName': 'myFirstLabel', 'labelHint': "integer"}]},
-                    {'inputId' : 'labelNumeric' , 'inputItemData': [{'labelName': 'mySecondLabel', 'labelHint': "2nd integer"}]}
-        ],
+    return  jsonify({
+        'isSuccessfull': True,
+        'htmlString': render_template('input1A.html'),
+        'jsScript' : 'alert("hello 1a")'
     })
+
 
 def inputDefault():
-    return jsonify({
-        'isSuccessfull' : False,
-        'whoAmI' : 'Input Default',
-        'errorMsg' : 'The Function you are looking for does not exist please try again or talk to a supervisor of this software..'
-    })
+    return render_template('inputDefault.html')
 
 
 
 
+# testing 
 # None is null for python
 # here we use the FLASK request object to get our POST methods
 @app.route('/itemInput', methods=['POST'])
 def itemInput():
     if request.method == "POST":
         if(request.form["parentId"] !=  None and request.form["childId"] != None):         
-            # relay received data back to user 
-            parentId = request.form["parentId"];
+            
+            # get recieved data from the POST request 
+            # parentId = request.form["parentId"];
             childId = request.form["childId"];
 
             # using switcher stmt  (an improv switch stmt)
-            # return the resulting function result
+            # return the resulting function result html
             funcResult = getInputData(childId)
             return funcResult;
-
-
-
 
         else:
             return jsonify({
@@ -119,7 +114,7 @@ def itemInput():
 
 
 
-@app.route('/itemInput', methods=['POST','GET'])
+@app.route('/itemOutput', methods=['POST','GET'])
 def itemOutput():
     if request.method == "POST" or request.method == "GET":
         return jsonify({
