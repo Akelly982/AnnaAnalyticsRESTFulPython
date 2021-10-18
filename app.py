@@ -62,23 +62,26 @@ def input1A():
     return  jsonify({
         'isSuccessfull': True,
         'htmlString': render_template('input1A.html'),
-        'jsScript' : 'alert("hello 1a")'
+        'jsScript' : render_template('input1A.js'),
     })
 
 
 def inputDefault():
-    return render_template('inputDefault.html')
+    return jsonify({
+        'isSuccessfull': True,
+        'htmlString': render_template('inputDefault.html'),
+        'jsScript' : " ",
+    })
 
 
 
 
-# testing 
 # None is null for python
 # here we use the FLASK request object to get our POST methods
 @app.route('/itemInput', methods=['POST'])
 def itemInput():
     if request.method == "POST":
-        if(request.form["parentId"] !=  None and request.form["childId"] != None):         
+        if(request.form["childId"] != None):         
             
             # get recieved data from the POST request 
             # parentId = request.form["parentId"];
@@ -88,11 +91,10 @@ def itemInput():
             # return the resulting function result html
             funcResult = getInputData(childId)
             return funcResult;
-
         else:
             return jsonify({
                 'isSuccessfull' : False,
-                'errorMsg' : 'request data missing for itemRequestWithData'
+                'errorMsg' : 'request data missing for input item Request'
             })
 
 
@@ -108,34 +110,33 @@ def itemInput():
 #------- Output -------------------------------
 #----------------------------------------------
 
+# outputs are handled individually because they all require diffrent inputs over POST / GET
+# i dont worry about child id here as the previous form should identify the route to use 
 
-
-
-
-
-
-@app.route('/itemOutput', methods=['POST','GET'])
+# here we use the FLASK request object to get our POST methods
+@app.route('/itemOutput1A', methods=['POST'])
 def itemOutput():
-    if request.method == "POST" or request.method == "GET":
-        return jsonify({
-            'isSuccessfull': True,
-            'errorMsg' : 'none',
-            'DataSet': [{'parentId': 1, 'parentName':"Simple Math", 'childData': 
-                            [{'childId': '1A', "childName": "addition"},
-                            {'childId': '1B', "childName": "subtraction"},
-                            {'childId': '1C', "childName": "multiply"}]},
+    if request.method == "POST":
+        if(request.form["x"] != None or request.form['y'] == None):         
+            # data validation should be done by the submitting form before sending over HTTP
+            # get the inputs 
+            num1 = request.form['x']
+            num2 = request.form['y']
 
-                    {'parentId': 2, 'parentName':"CP1017", 'childData': 
-                            [{'childId': '2A', "childName": "predictX"},
-                            {'childId': '2B', "childName": "predictY"}]},
+            #calculate 
+            result = int(num1) + int(num2)
 
-                    {'parentId': 3, 'parentName':"ADST506", 'childData': 
-                            [{'childId': '3A', "childName": "predictZ"},
-                            {'childId': '3B', "childName": "predictR"}]}
-                    ]
-        })
+            #setup for transfer back to gui
+            return jsonify({
+                'isSuccessfull' : True,
+                'htmlString' : render_template('output1A.html', value=result)
+            })
 
-    
+        else:
+            return jsonify({
+                'isSuccessfull' : False,
+                'htmlString' : render_template('outputDataMissing.html')
+            })
 
 
 
