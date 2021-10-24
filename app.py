@@ -115,7 +115,7 @@ def itemInput():
 
 # here we use the FLASK request object to get our POST methods
 @app.route('/itemOutput1A', methods=['POST'])
-def itemOutput():
+def itemOutput1A():
     if request.method == "POST":
         if(request.form["x"] != None or request.form['y'] == None):         
             # data validation should be done by the submitting form before sending over HTTP
@@ -137,6 +137,13 @@ def itemOutput():
                 'isSuccessfull' : False,
                 'htmlString' : render_template('outputDataMissing.html')
             })
+
+
+
+
+
+
+
 
 
 

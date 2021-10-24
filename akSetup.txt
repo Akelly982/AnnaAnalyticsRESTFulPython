@@ -4,6 +4,7 @@ start a new termianl pointing at AnnaAnalyticsRESTFulPython Folder
 --------
 
 #CMD's
+
 1)
 py -3 -m venv venv
 venv\Scripts\activate
@@ -29,7 +30,8 @@ Dont worry about it works fine with the older version
 
 
 -------
-When you run the Flask run command "CMD under 4)"
+When you run the "Flask run" CMD
+    It should launch so use the below URL to see if the server responeses in connection to the given endpoints.
 
 C:\Users\xxxxx\xxxxx\xxxxx\AnnaAnalyticsRESTFulPython>flask run
  * Environment: production
@@ -38,4 +40,5 @@ C:\Users\xxxxx\xxxxx\xxxxx\AnnaAnalyticsRESTFulPython>flask run
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
- It should launch so use the above URL to see if the server responds.
+------
+
