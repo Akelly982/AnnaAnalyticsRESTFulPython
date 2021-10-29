@@ -6,13 +6,13 @@ app = Flask(__name__)
 CORS(app)
 
 
-
+PROJECTNAME = "Anna Analytics RESTful Python"
 
 # Home page
 
 @app.route('/')
 def hello(name='Anna Analytics'):    # def function this can be called anything
-    return render_template('hello.html', siteName=name)
+    return render_template('home.html', siteName=PROJECTNAME)
 
 @app.route('/test')
 def testing():
@@ -52,7 +52,9 @@ def navFunc():
 # check to see if the data is implemented
 def getInputData(childId):
     switcher = {
-        '1A' : input1A
+        '1A' : input1A,
+        '1B' : input1B,
+        '1C' : input1C,
     }
     func = switcher.get(childId, inputDefault)
     return func()
@@ -63,6 +65,20 @@ def input1A():
         'isSuccessfull': True,
         'htmlString': render_template('input1A.html'),
         'jsScript' : render_template('input1A.js'),
+    })
+
+def input1B():
+    return  jsonify({
+        'isSuccessfull': True,
+        'htmlString': render_template('input1B.html'),
+        'jsScript' : render_template('input1B.js'),
+    })
+
+def input1C():
+    return  jsonify({
+        'isSuccessfull': True,
+        'htmlString': render_template('input1C.html'),
+        'jsScript' : render_template('input1C.js'),
     })
 
 
@@ -140,6 +156,54 @@ def itemOutput1A():
 
 
 
+@app.route('/itemOutput1B', methods=['POST'])
+def itemOutput1B():
+    if request.method == "POST":
+        if(request.form["x"] != None or request.form['y'] == None):         
+            # data validation should be done by the submitting form before sending over HTTP
+            # get the inputs 
+            num1 = request.form['x']
+            num2 = request.form['y']
+
+            #calculate 
+            result = int(num1) - int(num2)
+
+            #setup for transfer back to gui
+            return jsonify({
+                'isSuccessfull' : True,
+                'htmlString' : render_template('output1B.html', value=result)
+            })
+
+        else:
+            return jsonify({
+                'isSuccessfull' : False,
+                'htmlString' : render_template('outputDataMissing.html')
+            })
+
+
+@app.route('/itemOutput1C', methods=['POST'])
+def itemOutput1C():
+    if request.method == "POST":
+        if(request.form["x"] != None or request.form['y'] == None):         
+            # data validation should be done by the submitting form before sending over HTTP
+            # get the inputs 
+            num1 = request.form['x']
+            num2 = request.form['y']
+
+            #calculate 
+            result = int(num1) * int(num2)
+
+            #setup for transfer back to gui
+            return jsonify({
+                'isSuccessfull' : True,
+                'htmlString' : render_template('output1C.html', value=result)
+            })
+
+        else:
+            return jsonify({
+                'isSuccessfull' : False,
+                'htmlString' : render_template('outputDataMissing.html')
+            })
 
 
 
