@@ -15,9 +15,11 @@ The version I am using is "3.9.6" but any newer version than mine should work bu
 
 <br>
 
-### Second within our software:
+### Second with our software:
 
-start a new termianl pointing at AnnaAnalyticsRESTFulPython Folder 
+You can place this folder where ever you want mine is in my "repo" / "repositories" folder on my desktop because it comes from Github but that is up to you. 
+
+Start a new termianl pointing at AnnaAnalyticsRESTFulPython Folder 
 I use the Visual Studio Code CMD terminal with the project open.
 
 ---
