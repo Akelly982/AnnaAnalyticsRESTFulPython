@@ -1,9 +1,11 @@
 # AnnaAnalyticsRESTFulPython
 
-Installation:
+## Installation:
 
 Open a cmd terminal on your computer and make sure you have python framework installed
+```bash
 #CMD   python --version
+'''
 
 "I am using python 3.9.6"
 https://www.python.org/downloads/
