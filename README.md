@@ -1,6 +1,4 @@
 # AnnaAnalyticsRESTFulPython
- 
-
 
 Installation:
 
