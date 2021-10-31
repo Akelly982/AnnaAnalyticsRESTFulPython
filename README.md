@@ -96,3 +96,39 @@ Dont worry about it works fine with the older version
 2 Response:  <br>
 click "no"
 this is a VSCode thing
+
+
+
+
+
+<!-- ---
+
+### Copyrights: 
+
+I should write somthing here 
+
+-->
+
+
+---
+
+### Moral Rights:
+
+I would like to acknowlege external code used within this project and their comprehensive documentation
+1. [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+2. [python](https://www.python.org/)
+
+
+Additionall references and Tutorials
+1. [Avinash Sajjanshetty / Flask REST api tutorial](https://colab.research.google.com/github/pytorch/tutorials/blob/gh-pages/_downloads/6c042f3d39855d2a2de414758e5f9836/flask_rest_api_tutorial.ipynb)
+
+
+AIT Teachers/Supervisors:
+1. Kriss Mahatumaratana
+
+
+---
+
+### Contributors:
+
+Aidan Kelly
