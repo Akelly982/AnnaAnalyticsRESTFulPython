@@ -1,5 +1,10 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
+import json
+import numpy as np
+
+# we are not training data here so we just set up pretrained Linear models
+from sklearn import linear_model
 
 
 app = Flask(__name__)
@@ -9,15 +14,72 @@ CORS(app)
 PROJECTNAME = "Anna Analytics RESTful Python"
 
 # Home page
-
 @app.route('/')
 def hello(name='Anna Analytics'):    # def function this can be called anything
     return render_template('home.html', siteName=PROJECTNAME)
 
-@app.route('/test')
-def testing():
-    return  render_template('input1A.html')
 
+
+#===============================================================
+#==== functions / inline code / runs in console ================
+
+
+
+
+#Note why we are going to use JSON for DataModel Persistence
+# https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
+# Essentially Joblib and Pickle allow for code injection if unpickled code is untrusted
+# here this should not be the case but to be safe we will use JSON data model persistence
+
+#parentFolder
+PARENTDIR = "dataModels/"
+
+#Model DIR 
+DIR_SD101_ASSESMENT_MODEL = 'SD101AssesmentModel.txt'
+
+
+
+#Setup Model
+#Get persitant model data
+with open(PARENTDIR + DIR_SD101_ASSESMENT_MODEL,'r') as file:
+  tempJson = json.load(file)
+
+#Create a LinearRegression Model
+model = linear_model.LinearRegression()
+
+#fill the new linear model with our pretrained data 
+    #important to !!Note!! 
+    # tempJson == Dictionairy
+        # tempJson['coef'] has data type of list and needs to be converted to a ndarray
+        # tempJson['intercept'] has data type of list and needs to be converted to a ndarray
+            # ndArray is numpy array / n-dimensional array
+model.coef_ = np.array(tempJson['coef']) 
+model.intercept_ = np.array(tempJson['intercept'])
+
+
+#create function for using the model againts externall input's x,y,z.....
+def SD101_AssesmentModel(assignment1Score):
+    #convert to be in a 2d array
+    x = np.array([[assignment1Score]]) 
+    #submit to model to get result
+    #returned result should be of 2d array as well
+    predictionResult = model.predict(x)
+    #since it is one field we can cast int
+    return int(predictionResult)
+
+
+
+
+
+#===============================================================
+#==== EndPoints ================================================
+
+@app.route('/testJson')
+def testing():
+    predResult = SD101_AssesmentModel(88)
+    return jsonify({
+        'modelResult': predResult
+    }) 
 
 #-------Navigation ---------------------------
 #---------------------------------------------
@@ -33,7 +95,7 @@ def navFunc():
                             {'childId': '1B', "childName": "subtraction"},
                             {'childId': '1C', "childName": "multiply"}]},
 
-                    {'parentId': 2, 'parentName':"CP1017", 'childData': 
+                    {'parentId': 2, 'parentName':"SD101 Intro To Smart Data", 'childData': 
                             [{'childId': '2A', "childName": "predictX"},
                             {'childId': '2B', "childName": "predictY"}]},
 
@@ -112,11 +174,6 @@ def itemInput():
                 'isSuccessfull' : False,
                 'errorMsg' : 'request data missing for input item Request'
             })
-
-
-
-
-
 
 
 

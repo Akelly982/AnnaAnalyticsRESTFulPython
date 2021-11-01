@@ -53,3 +53,39 @@ should result in terminal where it is locally
 
 #CMD  pip install -U flask-cors
 ===========================================================
+
+
+//install sklearn for linear regression
+https://scikit-learn.org/stable/install.html
+
+//requires python
+    //#CMD python --version
+
+
+// potential conflicts
+Note that in order to avoid potential conflicts with other packages it is strongly recommended to use a virtual environment (venv) or a conda environment.
+
+// The above venv was installed when setting up our flask environment
+
+
+
+
+//install scikit / sklearn
+    // (venv) C:\Users\XxXxXx\xXXxxXXxx\repo\AnnaAnalyticsRESTFulPython>  <-- you need to lauch the virtural environment venv then run the CMD
+    // otherwise it just installs to you machine as a whole
+    // To get this to happen I lauched flask and opened a new command line within VSCode
+
+CMD# pip install -U scikit-learn
+
+//AKNote when ran installs below packages    (notice joblib)
+    //threadpoolctl, scipy, joblib, scikit-learn
+
+//to check installation of scikit went correctly
+CMD#      python -m pip show scikit-learn         # to see which version and where scikit-learn is installed
+CMD#      python -m pip freeze                    # to see all packages installed in the active virtualenv
+CMD#      python -c "import sklearn; sklearn.show_versions()"
+
+============================================================
+
+
+
