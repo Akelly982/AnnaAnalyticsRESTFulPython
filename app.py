@@ -35,13 +35,13 @@ def hello(name='Anna Analytics'):    # def function this can be called anything
 PARENTDIR = "dataModels/"
 
 #Model DIR 
-DIR_SD101_ASSESMENT_MODEL = 'SD101AssesmentModel.txt'
+DIR_APM1_ASSESMENT_MODEL = 'APM1AssesmentModel.txt'
 
 
 
 #Setup Model
 #Get persitant model data
-with open(PARENTDIR + DIR_SD101_ASSESMENT_MODEL,'r') as file:
+with open(PARENTDIR + DIR_APM1_ASSESMENT_MODEL,'r') as file:
   tempJson = json.load(file)
 
 #Create a LinearRegression Model
@@ -58,9 +58,10 @@ model.intercept_ = np.array(tempJson['intercept'])
 
 
 #create function for using the model againts externall input's x,y,z.....
-def SD101_AssesmentModel(assignment1Score):
+def APM1_AssesmentModel(assignment1Score):
     #convert to be in a 2d array
     x = np.array([[assignment1Score]]) 
+    
     #submit to model to get result
     #returned result should be of 2d array as well
     predictionResult = model.predict(x)
@@ -76,10 +77,11 @@ def SD101_AssesmentModel(assignment1Score):
 
 @app.route('/testJson')
 def testing():
-    predResult = SD101_AssesmentModel(88)
+    predResult = APM1_AssesmentModel(77)
     return jsonify({
         'modelResult': predResult
     }) 
+
 
 #-------Navigation ---------------------------
 #---------------------------------------------
@@ -261,6 +263,34 @@ def itemOutput1C():
                 'isSuccessfull' : False,
                 'htmlString' : render_template('outputDataMissing.html')
             })
+
+
+
+
+# outputAssignmentPredictMach1.html
+@app.route('/assigmentPredictMach1', methods=['POST'])
+def assigmentPredictMach1():
+    if request.method == "POST":
+        if(request.form["x"] != None):          
+            # data validation should be done by the submitting form before sending over HTTP
+            # get the inputs 
+            num = request.form['x']     #assignment 1 score 
+
+            #run against persistent AI 
+            result = APM1_AssesmentModel(num)
+
+            #setup for transfer back to gui
+            return jsonify({
+                'isSuccessfull' : True,
+                'htmlString' : render_template('outputAssignmentPredictMach1.html', value=result)
+            })
+        else:
+            return jsonify({
+                'isSuccessfull' : False,
+                'htmlString' : render_template('outputDataMissing.html')
+            })
+
+
 
 
 

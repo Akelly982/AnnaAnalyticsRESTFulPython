@@ -30,7 +30,7 @@ $("#inputSubmit").click(function(e){
             
         },    
         error: function (jqXhr, textStatus, errorMessage) {
-            console.log("Error 1A input");
+            console.log("Error 1C input");
         }    
     });  
 });
