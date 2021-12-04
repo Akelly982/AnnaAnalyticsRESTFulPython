@@ -24,8 +24,6 @@ def hello(name='Anna Analytics'):    # def function this can be called anything
 #==== functions / inline code / runs in console ================
 
 
-
-
 #Note why we are going to use JSON for DataModel Persistence
 # https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
 # Essentially Joblib and Pickle allow for code injection if unpickled code is untrusted
@@ -35,17 +33,19 @@ def hello(name='Anna Analytics'):    # def function this can be called anything
 PARENTDIR = "dataModels/"
 
 #Model DIR 
-DIR_APM1_ASSESMENT_MODEL = 'APM1AssesmentModel.txt'
+DIR_APM1_ASSESMENT_MODEL = 'JsonAPM1AssesmentModel.txt'
+DIR_ASSIGNMENT_PREDICTION_MODEL_2 = 'JsonAssignmentPredictionModel_2.txt'
 
 
-
-#Setup Model
+#Setup Models
+# ------------------------------------------------------------
+# ----------- APM1_ASSESMENT_MODEL ---------------------------
 #Get persitant model data
 with open(PARENTDIR + DIR_APM1_ASSESMENT_MODEL,'r') as file:
   tempJson = json.load(file)
 
 #Create a LinearRegression Model
-model = linear_model.LinearRegression()
+APM1model = linear_model.LinearRegression()
 
 #fill the new linear model with our pretrained data 
     #important to !!Note!! 
@@ -53,20 +53,66 @@ model = linear_model.LinearRegression()
         # tempJson['coef'] has data type of list and needs to be converted to a ndarray
         # tempJson['intercept'] has data type of list and needs to be converted to a ndarray
             # ndArray is numpy array / n-dimensional array
-model.coef_ = np.array(tempJson['coef']) 
-model.intercept_ = np.array(tempJson['intercept'])
+APM1model.coef_ = np.array(tempJson['coef']) 
+APM1model.intercept_ = np.array(tempJson['intercept'])
 
 
 #create function for using the model againts externall input's x,y,z.....
+#  ["assignment1Score"]
 def APM1_AssesmentModel(assignment1Score):
     #convert to be in a 2d array
     x = np.array([[assignment1Score]]) 
     
     #submit to model to get result
     #returned result should be of 2d array as well
-    predictionResult = model.predict(x)
+    predictionResult = APM1model.predict(x)
     #since it is one field we can cast int
     return int(predictionResult)
+
+
+
+# ------------------------------------------------------------
+# ----------- ASSIGNMENT_PREDICTION_MODEL_2 ---------------------------
+#Get persitant model data
+with open(PARENTDIR + DIR_ASSIGNMENT_PREDICTION_MODEL_2,'r') as file:
+  tempJson = json.load(file)
+
+#Create a LinearRegression Model
+modelAPM2 = linear_model.LinearRegression()
+
+#fill the new linear model with our pretrained data 
+    #important to !!Note!! 
+    # tempJson == Dictionairy
+        # tempJson['coef'] has data type of list and needs to be converted to a ndarray
+        # tempJson['intercept'] has data type of list and needs to be converted to a ndarray
+            # ndArray is numpy array / n-dimensional array
+modelAPM2.coef_ = np.array(tempJson['coef']) 
+modelAPM2.intercept_ = np.array(tempJson['intercept'])
+
+
+#create function for using the model againts externall input's x,y,z.....
+# ['isMale', 'rank_highest_education', 'scoreAss_25334', 'scoreAss_25335', 'scoreAss_25336', 'scoreAss_25337', 'scoreAss_25338', 'scoreAss_25339']
+def APM2_AssesmentModel(isMale, rank_highest_education, scoreAss_25334, scoreAss_25335, scoreAss_25336, scoreAss_25337, scoreAss_25338, scoreAss_25339):
+    #convert to be in a 2d array
+    x = np.array([[isMale, rank_highest_education, scoreAss_25334, scoreAss_25335, scoreAss_25336, scoreAss_25337, scoreAss_25338, scoreAss_25339]]) 
+    
+    #submit to model to get result
+    #returned result should be of 2d array as well
+    predictionResult = modelAPM2.predict(x)
+    #since it is one field we can cast int
+    return int(predictionResult)
+
+
+# ------------------------------------------------------------
+# ------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
@@ -77,112 +123,26 @@ def APM1_AssesmentModel(assignment1Score):
 
 @app.route('/testJson')
 def testing():
-    predResult = APM1_AssesmentModel(77)
+    predResult = APM2_AssesmentModel(1,4,77,66,55,88,66,77)
     return jsonify({
         'modelResult': predResult
     }) 
 
 
-#-------Navigation ---------------------------
+#------- isAlive / flask running ---------------------------
 #---------------------------------------------
 
-@app.route('/navBtn', methods=['POST','GET'])
-def navFunc():
+@app.route('/isAlive', methods=['POST','GET'])
+def isAlive():
     if request.method == "POST" or request.method == "GET":
         return jsonify({
             'isSuccessfull': True,
-            'errorMsg' : 'none', 
-            'DataSet': [{'parentId': 1, 'parentName':"Simple Math", 'childData': 
-                            [{'childId': '1A', "childName": "addition"},
-                            {'childId': '1B', "childName": "subtraction"},
-                            {'childId': '1C', "childName": "multiply"}]},
-
-                    {'parentId': 2, 'parentName':"SD101 Intro To Smart Data", 'childData': 
-                            [{'childId': '2A', "childName": "predictX"},
-                            {'childId': '2B', "childName": "predictY"}]},
-
-                    {'parentId': 3, 'parentName':"ADST506", 'childData': 
-                            [{'childId': '3A', "childName": "predictZ"},
-                            {'childId': '3B', "childName": "predictR"}]}
-                    ]
+            'data': "I am Flask and I am alive communicate with me..",
+            'errorMsg' : 'none' 
         })
         
 
-
-
-#------- Input -------------------------------
-#---------------------------------------------
-
-# check to see if the data is implemented
-def getInputData(childId):
-    switcher = {
-        '1A' : input1A,
-        '1B' : input1B,
-        '1C' : input1C,
-    }
-    func = switcher.get(childId, inputDefault)
-    return func()
-
-
-def input1A():
-    return  jsonify({
-        'isSuccessfull': True,
-        'htmlString': render_template('input1A.html'),
-        'jsScript' : render_template('input1A.js'),
-    })
-
-def input1B():
-    return  jsonify({
-        'isSuccessfull': True,
-        'htmlString': render_template('input1B.html'),
-        'jsScript' : render_template('input1B.js'),
-    })
-
-def input1C():
-    return  jsonify({
-        'isSuccessfull': True,
-        'htmlString': render_template('input1C.html'),
-        'jsScript' : render_template('input1C.js'),
-    })
-
-
-def inputDefault():
-    return jsonify({
-        'isSuccessfull': True,
-        'htmlString': render_template('inputDefault.html'),
-        'jsScript' : " ",
-    })
-
-
-
-
-# None is null for python
-# here we use the FLASK request object to get our POST methods
-@app.route('/itemInput', methods=['POST'])
-def itemInput():
-    if request.method == "POST":
-        if(request.form["childId"] != None):         
-            
-            # get recieved data from the POST request 
-            # parentId = request.form["parentId"];
-            childId = request.form["childId"];
-
-            # using switcher stmt  (an improv switch stmt)
-            # return the resulting function result html
-            funcResult = getInputData(childId)
-            return funcResult;
-        else:
-            return jsonify({
-                'isSuccessfull' : False,
-                'errorMsg' : 'request data missing for input item Request'
-            })
-
-
-
-
-
-
-#------- Output -------------------------------
+#------- Outputs -------------------------------
 #----------------------------------------------
 
 # outputs are handled individually because they all require diffrent inputs over POST / GET
@@ -290,6 +250,46 @@ def assigmentPredictMach1():
                 'htmlString' : render_template('outputDataMissing.html')
             })
 
+
+
+# def APM2_AssesmentModel(isMale, rank_highest_education, scoreAss_25334, scoreAss_25335, scoreAss_25336, scoreAss_25337, scoreAss_25338, scoreAss_25339):
+# outputAssignmentPredictMach2.html
+@app.route('/assigmentPredictMach2', methods=['POST'])
+def assigmentPredictMach2():
+    if request.method == "POST":
+        if(request.form["isMale"] != None and 
+            request.form["rank_highest_education"] != None and 
+            request.form["scoreAss_25334"] != None and
+            request.form["scoreAss_25335"] != None and
+            request.form["scoreAss_25336"] != None and
+            request.form["scoreAss_25337"] != None and         
+            request.form["scoreAss_25338"] != None and
+            request.form["scoreAss_25339"] != None):
+
+            # data validation should be done by the submitting form before sending over HTTP
+            # get the inputs 
+            isMale = request.form['isMale']
+            rank_highest_education = request.form['rank_highest_education'] 
+            scoreAss_25334 = request.form['scoreAss_25334'] 
+            scoreAss_25335 = request.form['scoreAss_25335']  
+            scoreAss_25336 = request.form['scoreAss_25336'] 
+            scoreAss_25337 = request.form['scoreAss_25337'] 
+            scoreAss_25338 = request.form['scoreAss_25338'] 
+            scoreAss_25339 = request.form['scoreAss_25339'] 
+
+            #run against persistent AI 
+            result = APM2_AssesmentModel(isMale, rank_highest_education, scoreAss_25334, scoreAss_25335, scoreAss_25336, scoreAss_25337, scoreAss_25338, scoreAss_25339)
+
+            #setup for transfer back to gui
+            return jsonify({
+                'isSuccessfull' : True,
+                'htmlString' : render_template('outputAssignmentPredictMach2.html', value=result)
+            })
+        else:
+            return jsonify({
+                'isSuccessfull' : False,
+                'htmlString' : render_template('outputDataMissing.html')
+            })
 
 
 
