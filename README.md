@@ -109,8 +109,9 @@ CMD# To see all packages installed in the active virtualenv
 python -m pip freeze
 ```
 
+CMD#      
 ```bash
-CMD#      python -c "import sklearn; sklearn.show_versions()"
+python -c "import sklearn; sklearn.show_versions()"
 ```
 
 
