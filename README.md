@@ -81,25 +81,24 @@ Again scikit / sklearn requires python check with
 python --version
 ```
 
-Potential conflicts
+Potential conflicts <br>
 In order to avoid potential conflicts with other packages it is strongly recommended to use a virtual environment (venv) or a conda environment.
 NOTE: The above venv was installed when setting up our flask environment
 
+<br>
 
-
-
-install scikit / sklearn
-    // (venv) C:\Users\XxXxXx\xXXxxXXxx\repo\AnnaAnalyticsRESTFulPython>  <-- you need to lauch the virtural environment venv then run the CMD
-    // otherwise it just installs to you machine as a whole
-    // To get this to happen I lauched flask and opened a new command line within VSCode
+install scikit / sklearn <br>
+    // (venv) C:\Users\XxXxXx\xXXxxXXxx\repo\AnnaAnalyticsRESTFulPython>  <-- you need to lauch the virtural environment venv then run the CMD <br>
+    // otherwise it just installs to you machine as a whole <br>
+    // To get this to happen I lauched flask and opened a new command line within VSCode <br>
 ```bash
 pip install -U scikit-learn
 ```
 
-AKNote when ran installs below packages    (notice joblib)
+AKNote when ran installs below packages    (notice joblib) <br>
     //threadpoolctl, scipy, joblib, scikit-learn
 
-To check installation of scikit went correctly
+To check installation of scikit went correctly <br>
 CMD#  To see which version and where scikit-learn is installed
 ```bash
 python -m pip show scikit-learn 
