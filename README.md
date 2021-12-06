@@ -65,13 +65,13 @@ At this point the server should be up and running and it should be recognised by
 
 <br>
 
-### WARNING--PLEASE READ THIS LAST BIT
+## WARNING--PLEASE READ THIS BIT
 Once up and running keep in mind your LocalHost destination here it really matters.. 
 The AnnaAnalyticsGUI is setup to look for 
 "http://127.0.0.1:5000/someEndPoint"
 
 
-## Last bit of installation
+# Last bit of installation
 once the above works ensure you install scikit for the sklearn linear regression
 [scikit site install section](https://scikit-learn.org/stable/install.html )
 If Flask is now running close it down in the cmd console using "(Press CTRL+C to quit)" just in case this makes a difference but we will need it sort of to install to the venv environment.
