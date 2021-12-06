@@ -71,6 +71,51 @@ The AnnaAnalyticsGUI is setup to look for
 "http://127.0.0.1:5000/someEndPoint"
 
 
+# Last bit of installation
+once the above works ensure you install scikit for the sklearn linear regression
+https://scikit-learn.org/stable/install.html
+
+Again it requires python check with 
+```bash
+python --version
+```
+
+Potential conflicts
+In order to avoid potential conflicts with other packages it is strongly recommended to use a virtual environment (venv) or a conda environment.
+NOTE: The above venv was installed when setting up our flask environment
+
+
+
+
+install scikit / sklearn
+    // (venv) C:\Users\XxXxXx\xXXxxXXxx\repo\AnnaAnalyticsRESTFulPython>  <-- you need to lauch the virtural environment venv then run the CMD
+    // otherwise it just installs to you machine as a whole
+    // To get this to happen I lauched flask and opened a new command line within VSCode
+```bash
+pip install -U scikit-learn
+```
+
+AKNote when ran installs below packages    (notice joblib)
+    //threadpoolctl, scipy, joblib, scikit-learn
+
+To check installation of scikit went correctly
+CMD#  To see which version and where scikit-learn is installed
+```bash
+python -m pip show scikit-learn 
+```
+
+
+CMD# To see all packages installed in the active virtualenv   
+```bash
+python -m pip freeze
+```
+
+
+```bash
+CMD#      python -c "import sklearn; sklearn.show_versions()"
+```
+
+
 
 ---
 
