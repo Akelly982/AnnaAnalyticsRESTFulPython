@@ -67,6 +67,7 @@ def APM1_AssesmentModel(assignment1Score):
     #returned result should be of 2d array as well
     predictionResult = APM1model.predict(x)
     #since it is one field we can cast int
+
     return int(predictionResult)
 
 
