@@ -23,7 +23,7 @@ Start a new termianl pointing at AnnaAnalyticsRESTFulPython Folder
 I use the Visual Studio Code CMD terminal with the project open.
 
 ---
-#CMD's
+# Installation CMD's
  
 1)
 ```bash
@@ -71,11 +71,12 @@ The AnnaAnalyticsGUI is setup to look for
 "http://127.0.0.1:5000/someEndPoint"
 
 
-# Last bit of installation
+## Last bit of installation
 once the above works ensure you install scikit for the sklearn linear regression
-https://scikit-learn.org/stable/install.html
+[scikit site install section](https://scikit-learn.org/stable/install.html )
+If Flask is now running close it down in the cmd console using "(Press CTRL+C to quit)" just in case this makes a difference but we will need it sort of to install to the venv environment.
 
-Again it requires python check with 
+Again scikit / sklearn requires python check with 
 ```bash
 python --version
 ```
@@ -104,12 +105,10 @@ CMD#  To see which version and where scikit-learn is installed
 python -m pip show scikit-learn 
 ```
 
-
 CMD# To see all packages installed in the active virtualenv   
 ```bash
 python -m pip freeze
 ```
-
 
 ```bash
 CMD#      python -c "import sklearn; sklearn.show_versions()"
@@ -140,7 +139,7 @@ Dont worry about it works fine with the older version
 
 2 Response:  <br>
 click "no"
-this is a VSCode thing
+this is some Venv / VSCode thing I didnt worry about it..
 
 
 
@@ -162,6 +161,7 @@ I should write somthing here
 I would like to acknowlege external code used within this project and their comprehensive documentation
 1. [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 2. [python](https://www.python.org/)
+3. [scikit-learn](https://scikit-learn.org/stable/index.html)
 
 
 Additionall references and Tutorials
